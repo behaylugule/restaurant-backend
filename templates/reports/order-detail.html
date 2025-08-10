@@ -1,0 +1,77 @@
+
+
+
+
+
+{% extends "reports/base.html" %} {% load static %} {% load humanize %}  {% block title %} {{data.title}} {% endblock %} {% block custom_style_link %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+{% endblock%} {% block content %}
+<style>
+    @page { size: A4 landscape; }
+  </style>
+<div class="container">
+    <div>
+      <div>
+        <div class="header-list">
+          <b>Order ID</b> <p>#{{data.data.id}}</p>
+        </div>
+          <div class="header-list">
+            <b>Customer Name:</b><p>{{data.data.username}}</p>
+          </div>
+         <div class="header-list">
+            <b>Oredr Data: </b><p>{{ data.data.create_date | slice:":10" }} {{ data.data.create_date | slice:"11:16" }}</td></p> 
+            
+         </div>
+        
+      </div>
+        <div class="text-sm text-left header-list">
+            
+           <b> print by :</b> <u>{{data.print_by}}</u>
+        </div>
+        <div class="text-sm text-left header-list">
+            <b>Date :</b> <u>{{data.date | date}}</u>
+          </div>
+    </div>
+ 
+  
+ 
+  <table class="table_style" border="1" cellspacing="0" >
+    <thead>
+      <tr>
+          <th style="">#</th>
+          <th style="">menu name</th>
+          <th style="">quantity</th>
+          <th style="">price</th>
+         
+          
+         
+      </tr>
+  </thead>
+    <tbody>
+        {% for order in data.data.order_items %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+                <td>{{ order.menu_name}}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{order.quantity}} * {{order.price | intcomma}}  </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+ <div>
+     <div class="text-sm text-left">
+            <b>Total :</b> <u>{{data.data.total_price | date}}</u>
+       </div>
+ </div>
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+

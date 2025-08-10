@@ -1,0 +1,14 @@
+header {
+    position: fixed;
+    left: -70px;
+    right: -70px;
+}
+header {
+    /* subtract @page margin */
+    top: -85px;
+    padding-bottom: 10px;
+}
+
+@page {
+    margin-top: 90px;
+}

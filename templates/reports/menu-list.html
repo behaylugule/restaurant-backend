@@ -1,0 +1,60 @@
+
+
+
+
+
+{% extends "reports/base.html" %} {% load static %} {% load humanize %}  {% block title %} {{data.title}} {% endblock %} {% block custom_style_link %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+{% endblock%} {% block content %}
+<style>
+    @page { size: A4 landscape; }
+  </style>
+<div class="container">
+    <div>
+        <div class="text-sm text-left">
+            
+           <b> print by :</b> <u>{{data.print_by}}</u>
+        </div>
+        <div class="text-sm text-right">
+            <b>Date :</b> <u>{{data.date | date}}</u>
+          </div>
+    </div>
+ 
+  
+ 
+  <table class="table_style" border="1" cellspacing="0" >
+    <thead>
+      <tr>
+          <th style="">#</th>
+          <th style="">name</th>
+          <th style="">Category Name</th>
+          <th style="">Price</th>
+          <th style="">Preparation Time(minutes)</th>
+         
+         
+      </tr>
+  </thead>
+    <tbody>
+        {% for order in data.data %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+                <td>{{ order.name}}</td>
+                <td>{{ order.category_name }}</td>
+                <td>{{ order.price | intcomma }}</td>
+                <td>{{order.preparation_time }}</td>
+               
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+

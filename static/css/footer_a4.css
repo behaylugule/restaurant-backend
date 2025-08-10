@@ -1,0 +1,21 @@
+footer {
+    position: fixed;
+    left: -70px;
+    right: -70px;
+}
+
+footer {
+    bottom: -40px;
+}
+
+/* @page {
+    margin-bottom: 90px;
+} */
+
+@page {
+    @bottom-center {
+        content: counter(page) ' / ' counter(pages);
+        margin-top: 16px;
+        font-size: xx-small;
+    }
+}

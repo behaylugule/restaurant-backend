@@ -1,0 +1,137 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.relative {
+    position: relative;
+}
+
+.watermark {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg); /* Center and rotate */
+    font-size: 16em;
+    color: rgba(12, 10, 10, 0.2); /* Gray and semi-transparent */
+    font-weight: bold;
+    z-index: -1; /* Place behind content */
+    pointer-events: none; /* Ensure watermark is non-interactive */
+    text-align: center;
+    width: 100%;
+}
+
+table td,
+table th {
+    border: 1px solid;
+    font-size: 10px;
+    padding: 4px 8px;
+    page-break-inside: avoid;
+    /* page-break-before: always; */
+}
+
+table td {
+    word-break: break-all;
+}
+
+.no-break {
+    word-break: normal;
+}
+
+.break-all {
+    word-break: break-all;
+}
+
+.preformatted {
+    white-space: pre; 
+    overflow: auto;
+    line-height: 2.5;
+    word-break: break-all;     /* Older property for word wrapping */
+}
+
+.grid {
+    display: grid;
+}
+.grid-col-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);;
+    gap: 100px;
+}
+.align-second-column {
+    grid-column: 2; /* Moves this item to the second column */
+  }
+
+.w-20 {
+   width: 20px
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+}
+.gap-y-4 {
+    column-gap: 40px;
+}
+
+
+/* Ensure nested tables can break within a page */
+.nested-table {
+    page-break-inside: auto; /* Allow breaks inside the nested table */
+    width: 100%;
+}
+
+/* Avoid breaking inside table rows */
+tr {
+    page-break-inside: avoid; /* Avoid breaking inside rows */
+}
+
+/* Avoid breaking inside table cells */
+.custom-th {
+    background-color: rgba(241, 240, 240, 0.5);
+    font-weight: bold;
+}
+.bold {
+    font-weight: bold;
+}
+.custom-td {
+    border:none
+}
+
+.custom_tdl {
+    border-bottom:none;
+    border-top:none;
+    border-right: 2px;
+}
+
+.custom-tdr {
+    border-bottom:none;
+    border-top:none;
+    border-left: 2px;
+}
+
+.custom-tdtb {
+    border-right: none;
+    border-left: none;
+}
+
+.text-sm td, .text-sm th {
+    font-size: 10px;
+}
+
+.text-vsm td, .text-vsm th {
+    font-size: 7px;
+}
+.text-vvsm td, .text-vvsm th {
+    font-size: 5px;
+}
+
+
+/* Force page breaks if necessary */
+.page-break {
+    page-break-before: always; /* Force a page break before this element */
+}
+.signature {
+    position: sticky;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}

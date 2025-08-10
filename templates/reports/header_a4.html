@@ -1,0 +1,23 @@
+{% load static %}
+
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/header_a4.css' %}"
+/>
+
+<header id="header">
+  <div class="row space-between ">
+    <!-- <img
+      class="logo-image"
+      src="{% static 'img/logo.png' %}"
+      alt="Company Logo"
+    /> -->
+    <div></div>
+    <div>
+        <h3 class="mb-10">{{data.shop_name}} </h3>
+        <h1 class="title">{{data.title}}</h1>
+    </div>
+    <div></div>
+  </div>
+</header>
