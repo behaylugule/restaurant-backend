@@ -27,8 +27,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         request = self.context.get('request')  # Access the request
         organization = None
         if request and request.user.is_authenticated:
-            if request.user['organization']:
-                organization = request.user.organization 
+            if request.user.role != 'admin':
+                if request.user['organization']:
+                    organization = request.user.organization 
 
 
 
