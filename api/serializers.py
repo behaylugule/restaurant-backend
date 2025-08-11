@@ -28,7 +28,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         organization = None
         if request and request.user.is_authenticated:
             if request.user.role != 'admin':
-                if request.user['organization']:
+                if request.user.organization:
                     organization = request.user.organization 
 
 
