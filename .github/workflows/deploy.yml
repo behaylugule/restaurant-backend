@@ -37,3 +37,16 @@ jobs:
             python manage.py migrate
             python manage.py collectstatic --noinput
             sudo supervisorctl restart all
+
+      - name: Deploy to second instance via shh
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST_2}}
+          username: ${{ secrets.EC2_USER}}
+          key: ${{ secrets.SSH_PRIVATE_KEY}}
+          script: |
+            cd /home/ubuntu/restaurant-backend
+            git pull origin main
+            source venv/bin/activate
+            pip install -r requirements.txt
+            sudo supervisorctl restart all
