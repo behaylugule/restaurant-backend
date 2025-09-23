@@ -32,8 +32,7 @@ urlpatterns = [
     path('client/categories/<int:pk>/', views.MenuCategoryListRetrive.as_view(),name='client_shop_menu'),
     path('client/menus/<int:pk>/',views.MenuListRetrive.as_view(),name='client_shop_menu'),
    
-    path('messages/', views.MessageListView.as_view(),name='message_list'),
-    path('chat-rooms/',views.ChatRoomCreateListView.as_view(),name='message_list'),
+
     
     
 ]
