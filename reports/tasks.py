@@ -4,8 +4,10 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from django.db.models import Q
 
-from api.models import CustomUser, Menu, Organization, Shop
-from api.serializers import MenuSerializer, OrganizationSerializer, RegisterSerializer, ShopSerializer
+from api.models import CustomUser, Organization, Shop
+from menu.models import Menu
+from menu.serializers import MenuSerializer
+from api.serializers import OrganizationSerializer, RegisterSerializer, ShopSerializer
 from orders.models import Order
 from orders.serializers import KitchenDisplaySerializer, OrderSerializer
 from utils.enum import USER_ROLE

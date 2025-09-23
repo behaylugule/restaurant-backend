@@ -1,6 +1,7 @@
 from django.db import models
 
-from api.models import CustomUser, DinningTable, Menu, Shop
+from api.models import CustomUser, DinningTable, Shop
+from menu.models import Menu
 from utils.commons_model import CommonsModel
 from utils.enum import ORDER_STATUS
 

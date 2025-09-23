@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import  DinningTable, Menu, MenuCategory,  Organization, Shop, UploadedFile
+from .models import  DinningTable, Organization, Shop, UploadedFile
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 
@@ -101,20 +101,5 @@ class GlobalCountSerializer(serializers.Serializer):
 
 
 
-class MenuCategorySerializer(serializers.ModelSerializer):
-     image_url = serializers.CharField(source='image.file',read_only=True)
-     shop_name = serializers.CharField(source='shop.name', read_only=True)
-     class Meta:
-         model = MenuCategory
-         fields = '__all__'
-
-class MenuSerializer(serializers.ModelSerializer):
-    image_url = serializers.CharField(source='image.file',read_only=True)
-    shop_name = serializers.CharField(source='shop.name',read_only =True)
-    category_name = serializers.CharField(source='menu_category.name',read_only = True)
-
-    class Meta:
-         model = Menu
-         fields = '__all__'
 
 

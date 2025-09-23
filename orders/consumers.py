@@ -5,7 +5,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.forms import ValidationError
 
-from api.models import DinningTable, Menu, Shop
+from api.models import DinningTable, Shop
+from menu.models import Menu
 from orders.models import Order, OrderItem
 from orders.serializers import KitchenDisplaySerializer
 from utils.enum import ORDER_STATUS, USER_ROLE

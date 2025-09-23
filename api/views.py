@@ -4,8 +4,10 @@ import string
 from rest_framework import generics, permissions, status
 
 from utils.enum import USER_ROLE, ORDER_STATUS
-from .models import DinningTable, Menu, MenuCategory, Organization, CustomUser, Organization, Shop
-from .serializers import DinningTableSerializer, GlobalCountSerializer, MenuCategorySerializer, MenuSerializer, OrganizationSerializer, OrganizationSerializer, PasswardChangeSerializer, RegisterSerializer, ShopSerializer, UploadedFileSerializer
+from .models import DinningTable, Organization, CustomUser, Organization, Shop
+from menu.models import Menu, MenuCategory
+from .serializers import DinningTableSerializer, GlobalCountSerializer, OrganizationSerializer, OrganizationSerializer, PasswardChangeSerializer, RegisterSerializer, ShopSerializer, UploadedFileSerializer
+from menu.serializers import MenuCategorySerializer, MenuSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth import get_user_model
@@ -152,7 +154,7 @@ class ShopDetailView(generics.RetrieveUpdateDestroyAPIView):
       permission_classes = [permissions.IsAuthenticated]
      
 
-class MenuCategoryListCreateView(generics.ListCreateAPIView):
+class MenuCategoryListCreateViewX(generics.ListCreateAPIView):
       serializer_class = MenuCategorySerializer
       permission_classes = [permissions.IsAuthenticated]     
       queryset = MenuCategory.objects.all().order_by('-create_date')

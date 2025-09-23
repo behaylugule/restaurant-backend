@@ -22,15 +22,7 @@ urlpatterns = [
     path('shops/<int:pk>/', views.ShopDetailView.as_view(),name='shop-detail'),
     path('dining-tables/', views.DinningTableCreateListView.as_view(),name="shop_dinning_table_list"),
     path('dining-tables/<int:pk>/', views.DinningTableRetrieveDetailView.as_view(),name="shop name"),
-    path('categories/', views.MenuCategoryListCreateView.as_view(), name='category-list-create'),
-    path('categories/<int:pk>/', views.MenuCategoryDetailView.as_view(),name='category-detail'),
-    
-    path('menu/', views.MenuListCreateView.as_view(),name='menu-list'),
-    path('menu/<int:pk>/',views.MenuDetailView.as_view(),name='menu-detail'),   
-
     path('client/shops/',views.ShopListRetrive.as_view(),name='client_shop'),
-    path('client/categories/<int:pk>/', views.MenuCategoryListRetrive.as_view(),name='client_shop_menu'),
-    path('client/menus/<int:pk>/',views.MenuListRetrive.as_view(),name='client_shop_menu'),
    
 
     

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
-from api.models import DinningTable, Menu, Shop
+from api.models import DinningTable, Shop
+from menu.models import Menu
 from orders.models import MenuRate, Order, OrderItem
 from rest_framework import generics, permissions, status
 

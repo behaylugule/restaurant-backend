@@ -3,7 +3,8 @@ from rest_framework import generics, permissions
 
 
 from api.models import Shop
-from api.serializers import MenuSerializer, OrganizationSerializer, ShopSerializer
+from menu.serializers import MenuSerializer
+from api.serializers import OrganizationSerializer, ShopSerializer
 from orders.models import Order
 from orders.serializers import KitchenDisplaySerializer, OrderSerializer
 from .tasks import menu_generate_report, order_detail_generate_report, order_generate_report, organization_generate_report, shop_generate_report, users_generate_report
