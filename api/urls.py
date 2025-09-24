@@ -2,17 +2,12 @@
 from django.urls import include, path
 
 
-from .views import  RegisterView,ChangePasswordView, RetrieveUser,UpdateUser
+
 from api import views
 
 
 urlpatterns = [
-    path('register/', RegisterView.as_view(), name='register'),
-    path('me/', views.me_view, name='me'),
-    path('update-profile/<int:pk>/',UpdateUser.as_view(),name='update-profile'),
-    path('change-password/',ChangePasswordView.as_view(),name='change_password'),
-    path('password-reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
-    path('users/',RetrieveUser.as_view(),name='get_user'),
+
     path('dashboard/count/',views.GlobalCountListView.as_view(), name='book-detail'),
     path('upload/',views.FileUploadCreateView.as_view(),name='file'),
     # organization and Shop
@@ -23,8 +18,4 @@ urlpatterns = [
     path('dining-tables/', views.DinningTableCreateListView.as_view(),name="shop_dinning_table_list"),
     path('dining-tables/<int:pk>/', views.DinningTableRetrieveDetailView.as_view(),name="shop name"),
     path('client/shops/',views.ShopListRetrive.as_view(),name='client_shop'),
-   
-
-    
-    
 ]
