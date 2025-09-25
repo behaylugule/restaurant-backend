@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'django_rest_passwordreset',
     'storages',
     'chat.apps.ChatConfig',
-     
+    'restaurantrag.apps.ChatConfig',
 
 ]
 

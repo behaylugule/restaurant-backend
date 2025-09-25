@@ -22,11 +22,12 @@ import api.routing
 import orders.routing
 import reports.routing
 import chat.routing
+import restaurantrag.routing
 
 
 django_asgi_app = get_asgi_application()
 
-websocket_patterns = api.routing.websocket_urlpatterns + orders.routing.websocket_urlpatterns + reports.routing.websocket_urlpatterns + chat.routing.websocket_urlpatterns
+websocket_patterns = api.routing.websocket_urlpatterns + orders.routing.websocket_urlpatterns + reports.routing.websocket_urlpatterns + chat.routing.websocket_urlpatterns + restaurantrag.routing.websocket_urlpatterns
 
 application = ProtocolTypeRouter({
     "http": django_asgi_app,
