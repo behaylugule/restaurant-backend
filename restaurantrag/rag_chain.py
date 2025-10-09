@@ -6,87 +6,69 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain.schema import Document
-
+# 👇 Import SystemMessagePromptTemplate
+from langchain_core.prompts import SystemMessagePromptTemplate, ChatPromptTemplate
 from asgiref.sync import sync_to_async
 from menu.models import Menu, MenuCategory
 from api.models import Shop
+from utils.vectorstore import get_vectorstore
 
 # Load environment variables
-load_dotenv()
-
-# ---------- ORM helper functions ----------
-
-@sync_to_async
-def get_shop(restaurant_id: int):
-    try:
-        return Shop.objects.get(id=restaurant_id)
-    except Shop.DoesNotExist:
-        return None
-
-@sync_to_async
-def get_categories(shop):
-    return list(MenuCategory.objects.filter(shop=shop))
-
-@sync_to_async
-def get_items(category):
-    return list(Menu.objects.filter(menu_category=category))
-
-# ---------- RAG helpers ----------
-
-async def get_restaurant_documents(restaurant_id: int):
-    """Fetch restaurant info, categories, and menu items from DB asynchronously"""
-    shop = await get_shop(restaurant_id)
-    if not shop:
-        return []
-
-    documents = [
-        Document(page_content=f"Restaurant Name: {shop.name}\nAddress: {shop.address}\n")
-    ]
-
-    categories = await get_categories(shop)
-    for category in categories:
-        items = await get_items(category)
-        for item in items:
-            documents.append(Document(
-                page_content=(
-                    f"Category: {category.name}\n"
-                    f"Item: {item.name}\n"
-                    f"Price: {item.price}\n"
-                    f"Description: {item.description}\n"
-                )
-            ))
-    return documents
+load_dotenv()  
 
 
 async def get_restaurant_chain(restaurant_id: int) -> ConversationalRetrievalChain:
-    """Create a dynamic RAG chain for a specific restaurant asynchronously"""
-    documents = await get_restaurant_documents(restaurant_id)
-    if not documents:
-        raise ValueError("No restaurant data found.")
+    """Create a dynamic RAG chain for a specific restaurant asynchronously with a system prompt"""
 
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
-
-    vectordb = Chroma.from_documents(
-        documents,
-        embeddings,
-        collection_name=f"restaurant_{restaurant_id}",
-        persist_directory=f"./chroma_store/restaurant_{restaurant_id}"
+    
+    # 1. Define your System Prompt
+    system_prompt_template = (
+        "You are a helpful and friendly AI assistant for a restaurant. "
+        F"Your name is restaurant{restaurant_id}. Your primary goal is to answer questions about the "
+        "restaurant's **menu, location, and hours** based *only* on the provided context. "
+        "If the answer is not found in the context, politely state that you don't have "
+        "that information. Do not mention the existence of the context documents."
     )
-    vectordb.persist()
+    
+    # 2. Create the System Message Prompt Template
+    system_message_prompt = SystemMessagePromptTemplate.from_template(system_prompt_template)
+    
+    # 3. Create a custom template for the RAG chain
+    # The default template for ConversationalRetrievalChain.from_llm
+    # is a combination of system_message + history + question + context
+    # By passing a template, you can customize this structure.
+    
+    # NOTE: The default prompt for this chain when using a custom template
+    # expects 'chat_history', 'context', and 'question' as input variables.
+    # The SystemMessagePromptTemplate is added *before* the other parts.
+    qa_prompt = ChatPromptTemplate.from_messages(
+        [
+            system_message_prompt,
+            ("human", "{chat_history}"),
+            ("human", "Context: {context}"),
+            ("human", "Question: {question}"),
+        ]
+    )
+
+    vectordb = await sync_to_async(get_vectorstore)(restaurant_id)
 
     llm = ChatOpenAI(model="gpt-4o-mini", streaming=True, temperature=0)
 
     memory = ConversationBufferMemory(
         memory_key="chat_history",
-        input_key="question",   # optional, defaults to "input"
-        output_key="answer",    # ✅ store only the 'answer' in memory
+        input_key="question",
+        output_key="answer",
         return_messages=True
     )
+    
+    # 4. Pass the custom prompt to the chain
     chain = ConversationalRetrievalChain.from_llm(
         llm=llm,
-        retriever=vectordb.as_retriever(search_kwargs={"k": 3}),
+        retriever=vectordb.as_retriever(search_kwargs={"k": int(restaurant_id)}),
         memory=memory,
         return_source_documents=True,
-        output_key="answer"
+        output_key="answer",
+        # Pass the custom prompt
+        combine_docs_chain_kwargs={"prompt": qa_prompt} 
     )
     return chain

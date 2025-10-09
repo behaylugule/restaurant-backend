@@ -30,5 +30,6 @@ urlpatterns = [
     path('api/menu/', include('menu.urls')),
     path('api/auth/', include('accounts.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/rag/', include('restaurantrag.urls')),
 ]
 
